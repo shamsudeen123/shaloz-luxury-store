@@ -145,12 +145,6 @@ export default function Home() {
       {/* ── Navbar ─────────────────────────────────────── */}
       <header className={`navbar ${scrolled ? "scrolled" : ""}`}>
         <a href="#hero" className="navbar-logo">
-          <span className="brand-mark" aria-hidden="true">
-            <svg viewBox="0 0 32 32" focusable="false">
-              <path d="M16 3.5 27 12 16 28.5 5 12 16 3.5Z" />
-              <path d="M5 12h22M11.2 12 16 3.5 20.8 12 16 28.5 11.2 12Z" />
-            </svg>
-          </span>
           <span className="brand-copy">
             Shaloz <span>Luxury Store</span>
           </span>

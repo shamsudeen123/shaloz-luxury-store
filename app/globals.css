@@ -180,7 +180,7 @@ button {
 .footer-logo {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
+  gap: 0;
   font-family: var(--font-heading);
   font-size: 1.35rem;
   font-weight: 600;
@@ -189,38 +189,25 @@ button {
   white-space: nowrap;
 }
 
-.brand-mark {
-  display: inline-grid;
-  width: 46px;
-  height: 46px;
-  place-items: center;
-  border: 1px solid rgba(228, 201, 132, 0.5);
-  border-radius: 50%;
-  background:
-    radial-gradient(circle at 35% 25%, rgba(255, 255, 255, 0.28), transparent 32%),
-    linear-gradient(145deg, #1c1712, #76531d);
-  color: #f2d998;
-  box-shadow: 0 14px 38px rgba(0, 0, 0, 0.22), inset 0 0 0 4px rgba(255, 255, 255, 0.06);
-}
-
-.brand-mark svg {
-  width: 23px;
-  height: 23px;
-  fill: rgba(255, 255, 255, 0.1);
-  stroke: #f2d998;
-  stroke-linejoin: round;
-  stroke-width: 1.45;
-}
-
-.navbar.scrolled .brand-mark {
-  background:
-    radial-gradient(circle at 35% 25%, rgba(255, 255, 255, 0.18), transparent 32%),
-    linear-gradient(145deg, #15110d, #6f4d19);
-  border-color: rgba(122, 85, 29, 0.28);
-}
-
 .brand-copy {
-  display: inline-block;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 7px;
+  padding: 10px 16px;
+  border: 1px solid rgba(228, 201, 132, 0.48);
+  border-radius: 999px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(189, 139, 47, 0.12)),
+    rgba(17, 17, 17, 0.24);
+  box-shadow: 0 14px 38px rgba(0, 0, 0, 0.16);
+  color: var(--white);
+}
+
+.navbar.scrolled .brand-copy {
+  background: rgba(17, 17, 17, 0.04);
+  border-color: rgba(122, 85, 29, 0.22);
+  box-shadow: none;
+  color: var(--ink);
 }
 
 .brand-copy span,
@@ -1050,24 +1037,15 @@ button {
   .navbar-logo {
     min-width: 0;
     max-width: calc(100vw - 92px);
-    gap: 10px;
     white-space: nowrap;
-  }
-
-  .brand-mark {
-    width: 40px;
-    height: 40px;
-    flex: 0 0 auto;
-  }
-
-  .brand-mark svg {
-    width: 20px;
-    height: 20px;
   }
 
   .brand-copy {
     overflow: hidden;
-    font-size: 1rem;
+    gap: 5px;
+    max-width: 100%;
+    padding: 9px 12px;
+    font-size: 0.94rem;
     line-height: 1.05;
     text-overflow: ellipsis;
   }
@@ -1267,7 +1245,7 @@ button {
 
   .brand-copy {
     max-width: 178px;
-    font-size: 0.9rem;
+    font-size: 0.82rem;
   }
 
   .hero {
