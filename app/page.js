@@ -1,33 +1,51 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import cartierImage from "./images/cartier.jpeg";
+import chanelImage from "./images/chanel.jpeg";
+import hermesImage from "./images/hermes.jpeg";
+import lvImage from "./images/lv.jpeg";
+import rolexImage from "./images/rolex.jpeg";
+
+const IMAGES = {
+  cartier: cartierImage.src,
+  chanel: chanelImage.src,
+  hermes: hermesImage.src,
+  lv: lvImage.src,
+  rolex: rolexImage.src,
+};
 
 /* ─── Data ──────────────────────────────────────────────── */
 const CATEGORIES = [
   {
     title: "Hermès",
     count: "Bags",
-    image: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=600&q=80",
+    image: IMAGES.hermes,
   },
   {
-    title: "Louboutin",
-    count: "Shoes",
-    image: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&w=600&q=80",
+    title: "Louis Vuitton",
+    count: "Bags",
+    image: IMAGES.lv,
   },
   {
     title: "Chanel",
     count: "Dresses",
-    image: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=600&q=80",
+    image: IMAGES.chanel,
   },
   {
     title: "Rolex",
     count: "Watches",
-    image: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?auto=format&fit=crop&w=600&q=80",
+    image: IMAGES.rolex,
   },
   {
     title: "Cartier",
     count: "Accessories",
-    image: "https://images.unsplash.com/photo-1535632787350-4e68ef0ac584?auto=format&fit=crop&w=600&q=80",
+    image: IMAGES.cartier,
+  },
+  {
+    title: "Designer Edit",
+    count: "Seasonal Picks",
+    image: IMAGES.chanel,
   },
 ];
 
@@ -37,50 +55,36 @@ const PRODUCTS = [
     category: "Bags",
     brand: "Hermès",
     badge: "Iconic",
-    image: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=600&q=80",
-  },
-  {
-    name: "Christian Louboutin So Kate",
-    category: "Shoes",
-    brand: "Louboutin",
-    badge: "Signature",
-    image: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&w=600&q=80",
+    image: IMAGES.hermes,
   },
   {
     name: "Chanel Haute Couture Gown",
     category: "Dresses",
     brand: "Chanel",
     badge: "Exclusive",
-    image: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=600&q=80",
+    image: IMAGES.chanel,
   },
   {
     name: "Rolex Datejust 41",
     category: "Watches",
     brand: "Rolex",
     badge: "Prestige",
-    image: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?auto=format&fit=crop&w=600&q=80",
+    image: IMAGES.rolex,
   },
   {
     name: "Louis Vuitton Capucines",
     category: "Bags",
     brand: "Louis Vuitton",
     badge: "New",
-    image: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=600&q=80",
+    image: IMAGES.lv,
   },
   {
     name: "Cartier Love Bracelet",
     category: "Accessories",
     brand: "Cartier",
     badge: "Limited",
-    image: "https://images.unsplash.com/photo-1535632787350-4e68ef0ac584?auto=format&fit=crop&w=600&q=80",
+    image: IMAGES.cartier,
   },
-];
-
-const TAGLINES = [
-  "Timeless Luxury & Style",
-  "Where Elegance Meets Art",
-  "Curated for the Discerning",
-  "Beyond Fashion · Beyond Time",
 ];
 
 /* ─── useReveal Hook ────────────────────────────────────── */
@@ -132,10 +136,6 @@ function AnimatedCounter({ value, suffix = "" }) {
 export default function Home() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [particles, setParticles] = useState([]);
-  const [cursor, setCursor] = useState({ x: -200, y: -200 });
-  const [cursorActive, setCursorActive] = useState(false);
-  const [tagline, setTagline] = useState({ text: "", idx: 0, typing: true });
 
   useReveal();
 
@@ -145,61 +145,12 @@ export default function Home() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  useEffect(() => {
-    const move = (e) => setCursor({ x: e.clientX, y: e.clientY });
-    const over = (e) => { if (e.target.closest("a,button,[role=button]")) setCursorActive(true); };
-    const out = () => setCursorActive(false);
-    window.addEventListener("mousemove", move);
-    document.addEventListener("mouseover", over);
-    document.addEventListener("mouseout", out);
-    return () => {
-      window.removeEventListener("mousemove", move);
-      document.removeEventListener("mouseover", over);
-      document.removeEventListener("mouseout", out);
-    };
-  }, []);
-
-  useEffect(() => {
-    const full = TAGLINES[tagline.idx];
-    if (tagline.typing) {
-      if (tagline.text.length < full.length) {
-        const t = setTimeout(() => setTagline(p => ({ ...p, text: full.slice(0, p.text.length + 1) })), 75);
-        return () => clearTimeout(t);
-      } else {
-        const t = setTimeout(() => setTagline(p => ({ ...p, typing: false })), 2200);
-        return () => clearTimeout(t);
-      }
-    } else {
-      if (tagline.text.length > 0) {
-        const t = setTimeout(() => setTagline(p => ({ ...p, text: p.text.slice(0, -1) })), 35);
-        return () => clearTimeout(t);
-      } else {
-        setTagline(p => ({ text: "", idx: (p.idx + 1) % TAGLINES.length, typing: true }));
-      }
-    }
-  }, [tagline]);
-
-  useEffect(() => {
-    setParticles(Array.from({ length: 28 }, (_, i) => ({
-      id: i,
-      left: `${(i * 5.56 + 3) % 100}%`,
-      top: `${(i * 7.3 + 10) % 100}%`,
-      size: `${(i % 3) + 1}px`,
-      duration: `${10 + (i % 8)}s`,
-      delay: `${(i * 0.4) % 6}s`,
-    })));
-  }, []);
-
   return (
     <>
-      {/* ── Custom Cursor ──────────────────────────────── */}
-      <div className={`cursor-dot${cursorActive ? " cursor-active" : ""}`} style={{ left: cursor.x, top: cursor.y }} aria-hidden="true" />
-      <div className={`cursor-ring${cursorActive ? " cursor-active" : ""}`} style={{ left: cursor.x, top: cursor.y }} aria-hidden="true" />
-
       {/* ── Navbar ─────────────────────────────────────── */}
       <header className={`navbar ${scrolled ? "scrolled" : ""}`}>
         <a href="#hero" className="navbar-logo">
-          Luxe <span>Collection</span>
+          Shaloz <span>Luxury Store</span>
         </a>
 
         <nav className="navbar-nav" aria-label="Main navigation">
@@ -268,30 +219,15 @@ export default function Home() {
       <main>
         {/* ── Hero ──────────────────────────────────────── */}
         <section id="hero" className="hero">
-          <div className="hero-bg" />
-          <div className="hero-pattern" />
-          <div className="hero-orb orb-1" />
-          <div className="hero-orb orb-2" />
-          <div className="hero-orb orb-3" />
-
-          {particles.map(p => (
-            <div key={p.id} className="particle" style={{
-              left: p.left, top: p.top,
-              width: p.size, height: p.size,
-              animationDuration: p.duration,
-              animationDelay: p.delay,
-            }} />
-          ))}
-
           <div className="hero-content">
-            <div className="hero-eyebrow">Est. 2010</div>
+            <div className="hero-eyebrow">Luxury fashion house · Est. 2010</div>
 
             <h1 className="hero-title">
-              Luxe <em>Collection</em>
+              Shaloz <em>Luxury Store</em>
             </h1>
 
             <p className="hero-tagline">
-              {tagline.text}<span className="type-cursor" aria-hidden="true">|</span>
+              Curated designer bags, watches, shoes, dresses, and accessories for a refined wardrobe.
             </p>
 
             <div className="hero-actions">
@@ -307,9 +243,15 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="hero-scroll" aria-hidden="true">
-            <span>Scroll</span>
-            <div className="hero-scroll-line" />
+          <div className="hero-media" aria-hidden="true">
+            <img
+              src={IMAGES.hermes}
+              alt=""
+            />
+            <div className="hero-card">
+              <span>Private edit</span>
+              <strong>200+ curated pieces</strong>
+            </div>
           </div>
         </section>
 
@@ -319,9 +261,8 @@ export default function Home() {
             {/* Visual */}
             <div className="about-visual reveal-left">
               <img
-                src="https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=800&q=80"
-                alt="Luxe Collection"
-                style={{ width: "100%", height: "100%", objectFit: "cover", filter: "brightness(0.8) saturate(0.85)" }}
+                src={IMAGES.chanel}
+                alt="Shaloz Luxury Store"
               />
               <div className="about-frame" aria-hidden="true" />
             </div>
@@ -329,36 +270,18 @@ export default function Home() {
             {/* Text */}
             <div className="reveal-right">
               <span className="section-tag">Our Story</span>
-              <h2 className="section-title" style={{ textAlign: "left", margin: "0 0 24px" }}>
+              <h2 className="section-title align-left">
                 Crafted for the<br />Discerning Few
               </h2>
-              <div className="gold-line" style={{ margin: "0 0 32px" }} />
-              <p
-                style={{
-                  fontFamily: "var(--font-body)",
-                  fontSize: "1.1rem",
-                  fontWeight: 300,
-                  color: "var(--light-gray)",
-                  lineHeight: 1.9,
-                  marginBottom: "20px",
-                }}
-              >
-                Born from a passion for unparalleled craftsmanship, Luxe Collection is a destination for those who regard fashion as art. Each piece in our curated edit is sourced from the world's finest ateliers — where heritage techniques meet contemporary vision.
+              <div className="gold-line align-left" />
+              <p>
+                Born from a passion for unparalleled craftsmanship, Shaloz Luxury Store is a destination for those who regard fashion as art. Each piece in our curated edit is sourced from the world's finest ateliers — where heritage techniques meet contemporary vision.
               </p>
-              <p
-                style={{
-                  fontFamily: "var(--font-body)",
-                  fontSize: "1.1rem",
-                  fontWeight: 300,
-                  color: "var(--light-gray)",
-                  lineHeight: 1.9,
-                  marginBottom: "40px",
-                }}
-              >
+              <p>
                 We believe luxury is not merely a price point — it is a commitment to quality, intention, and enduring elegance. Every stitch, every material, every silhouette is chosen with purpose.
               </p>
 
-              <a href="#categories" className="btn btn-outline" style={{ fontSize: "0.8rem" }}>
+              <a href="#categories" className="btn btn-outline">
                 Discover More
               </a>
 
@@ -440,7 +363,6 @@ export default function Home() {
                     <img
                       src={product.image}
                       alt={product.name}
-                      style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.7s cubic-bezier(0.4,0,0.2,1)", filter: "brightness(0.85) saturate(0.9)" }}
                     />
                   </div>
                   {product.badge && (
@@ -508,7 +430,7 @@ export default function Home() {
         <div className="footer-top">
           <div>
             <div className="footer-logo">
-              Luxe <span>Collection</span>
+              Shaloz <span>Luxury Store</span>
             </div>
             <div className="footer-tagline">Timeless Luxury &amp; Style</div>
           </div>
@@ -547,7 +469,7 @@ export default function Home() {
 
         <div className="footer-bottom">
           <p className="footer-copy">
-            &copy; {new Date().getFullYear()} <span>Luxe Collection</span>. All rights reserved.
+            &copy; {new Date().getFullYear()} <span>Shaloz Luxury Store</span>. All rights reserved.
           </p>
           <p className="footer-copy">
             Privacy Policy &nbsp;·&nbsp; Terms of Service
