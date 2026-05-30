@@ -42,11 +42,6 @@ const CATEGORIES = [
     count: "Accessories",
     image: IMAGES.cartier,
   },
-  {
-    title: "Designer Edit",
-    count: "Seasonal Picks",
-    image: IMAGES.chanel,
-  },
 ];
 
 const PRODUCTS = [
@@ -150,7 +145,15 @@ export default function Home() {
       {/* ── Navbar ─────────────────────────────────────── */}
       <header className={`navbar ${scrolled ? "scrolled" : ""}`}>
         <a href="#hero" className="navbar-logo">
-          Shaloz <span>Luxury Store</span>
+          <span className="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 32 32" focusable="false">
+              <path d="M16 3.5 27 12 16 28.5 5 12 16 3.5Z" />
+              <path d="M5 12h22M11.2 12 16 3.5 20.8 12 16 28.5 11.2 12Z" />
+            </svg>
+          </span>
+          <span className="brand-copy">
+            Shaloz <span>Luxury Store</span>
+          </span>
         </a>
 
         <nav className="navbar-nav" aria-label="Main navigation">
@@ -190,19 +193,7 @@ export default function Home() {
 
       {/* ── Mobile Menu ────────────────────────────────── */}
       {menuOpen && (
-        <div
-          style={{
-            position: "fixed",
-            inset: 0,
-            background: "rgba(10,10,10,0.97)",
-            zIndex: 99,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: "36px",
-          }}
-        >
+        <div className="mobile-menu">
           {["About", "Categories", "Products", "Contact"].map((item) => (
             <a
               key={item}
@@ -213,6 +204,9 @@ export default function Home() {
               {item}
             </a>
           ))}
+          <a href="https://wa.me/919895792690" target="_blank" rel="noopener noreferrer" className="mobile-menu-cta">
+            WhatsApp Enquiry
+          </a>
         </div>
       )}
 
@@ -229,6 +223,12 @@ export default function Home() {
             <p className="hero-tagline">
               Curated designer bags, watches, shoes, dresses, and accessories for a refined wardrobe.
             </p>
+
+            <div className="hero-points" aria-label="Store highlights">
+              <span>Authenticated pieces</span>
+              <span>Private sourcing</span>
+              <span>Worldwide delivery</span>
+            </div>
 
             <div className="hero-actions">
               <a href="#categories" className="btn btn-gold">
